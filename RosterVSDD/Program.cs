@@ -26,6 +26,11 @@ app.MapRazorPages()
    .WithStaticAssets();
 
 // Minimal API endpoint for JSON feed
-app.MapGet("/api/roster", (RosterVSDD.Services.IRosterService svc) => Results.Json(svc.GetAll()));
+app.MapGet("/api/roster", (RosterVSDD.Services.IRosterService svc) =>
+{
+    var entries = svc.GetAll();
+    var json = System.Text.Json.JsonSerializer.Serialize(entries);
+    return Results.Content(json, "application/json");
+});
 
 app.Run();

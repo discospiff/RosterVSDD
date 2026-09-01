@@ -1,3 +1,7 @@
 <Solution>
+  <Folder Name="/tests/">
+    <Project Path="tests/RosterVSDD.IntegrationTests/RosterVSDD.IntegrationTests.csproj" />
+    <Project Path="tests/RosterVSDD.UnitTests/RosterVSDD.UnitTests.csproj" />
+  </Folder>
   <Project Path="RosterVSDD/RosterVSDD.csproj" />
 </Solution>
