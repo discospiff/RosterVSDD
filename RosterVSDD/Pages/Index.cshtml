@@ -1,10 +1,81 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Roster";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h1>Roster</h1>
+
+<form method="post" class="mb-4">
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="Input.FirstName" class="form-label"></label>
+            <input asp-for="Input.FirstName" class="form-control" />
+            <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="Input.LastName" class="form-label"></label>
+            <input asp-for="Input.LastName" class="form-control" />
+            <span asp-validation-for="Input.LastName" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Input.Major" class="form-label"></label>
+        <input asp-for="Input.Major" class="form-control" />
+        <span asp-validation-for="Input.Major" class="text-danger"></span>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="Input.FavoriteKeyboardShortcut" class="form-label"></label>
+            <input asp-for="Input.FavoriteKeyboardShortcut" class="form-control" />
+            <span asp-validation-for="Input.FavoriteKeyboardShortcut" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="Input.ShortcutContext" class="form-label"></label>
+            <input asp-for="Input.ShortcutContext" class="form-control" />
+            <span asp-validation-for="Input.ShortcutContext" class="text-danger"></span>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a class="btn btn-link" href="/api/roster" target="_blank">JSON Feed</a>
+</form>
+
+<partial name="_ValidationScriptsPartial" />
+
+<h2>Entries</h2>
+
+@if (Model.Roster == null || !Model.Roster.Any())
+{
+    <p>No entries yet.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>First</th>
+                <th>Last</th>
+                <th>Major</th>
+                <th>Shortcut</th>
+                <th>Context</th>
+                <th>Submitted</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var e in Model.Roster)
+        {
+            <tr>
+                <td>@e.FirstName</td>
+                <td>@e.LastName</td>
+                <td>@e.Major</td>
+                <td>@e.FavoriteKeyboardShortcut</td>
+                <td>@e.ShortcutContext</td>
+                <td>@e.CreatedUtc.ToLocalTime().ToString("g")</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

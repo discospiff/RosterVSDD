@@ -2,6 +2,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddSingleton<RosterVSDD.Services.IRosterService, RosterVSDD.Services.InMemoryRosterService>();
+// Ensure DI registration exists for IRosterService (no-op update to unify file paths)
 
 var app = builder.Build();
 
@@ -22,5 +24,8 @@ app.UseAuthorization();
 app.MapStaticAssets();
 app.MapRazorPages()
    .WithStaticAssets();
+
+// Minimal API endpoint for JSON feed
+app.MapGet("/api/roster", (RosterVSDD.Services.IRosterService svc) => Results.Json(svc.GetAll()));
 
 app.Run();
